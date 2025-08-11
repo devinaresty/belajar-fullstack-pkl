@@ -1,0 +1,125 @@
+/* Font "seperti iPhone" (SF Pro di iOS/macOS) */
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+               "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji",
+               "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+html, body, #app {
+  height: 100%;
+  margin: 0;
+  font-family: var(--font-sans);
+  background: #fdf2f8; /* pink muda */
+  color: #222;
+}
+
+/* helper */
+.container { max-width: 1200px; margin: 0 auto; padding: 4 16px; }
+
+.btn {
+  border: 0;
+  border-radius: 9999px;
+  padding: 10px 16px;
+  background: #ec4899; /* pink */
+  color: #fff;
+  cursor: pointer;
+}
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.grid-products {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* mobile: 2 kolom */
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .grid-products { grid-template-columns: repeat(3, minmax(0, 1fr)); } /* tablet: 3 */
+}
+@media (min-width: 1200px) {
+  .grid-products { grid-template-columns: repeat(5, minmax(0, 1fr)); } /* desktop: 5 */
+}
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.header {
+  background: #f472b6; /* header pink */
+  color: #fff;
+  height: 64px;
+  display: flex; align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 12px 10px 36px; /* space kiri buat ikon */
+  border-radius: 9999px;
+  border: none;
+  outline: none;
+}
+
+.badge {
+  position: absolute; top: -6px; right: -6px;
+  width: 20px; height: 20px; background: #fff; color: #ec4899;
+  border-radius: 9999px; font-size: 12px; display: grid; place-items: center;
+}
+
+/* ===== Header fluid & responsif (khusus header saja) ===== */
+
+/* Bikin container di dalam header jadi full-width
+   (komponen lain tetap pakai max-width:1200px dari .container global) */
+.header > .container {
+  max-width: none !important;
+  width: 100%;
+  padding-left: 16px;   /* tetap ada spasi kiri/kanan */
+  padding-right: 16px;
+}
+
+/* Brand (anak pertama) tidak ikut melebar */
+.header > .container > div:nth-child(1) {
+  flex: 0 0 auto;
+}
+
+/* Search wrapper (anak kedua) jadi elemen fluid:
+   - bisa melebar di layar besar,
+   - bisa mengecil di layar kecil,
+   - min-width:0 supaya input tidak overflow */
+.header > .container > div:nth-child(2) {
+  flex: 1 1 560px;      /* basis awal 560px, tapi fleksibel */
+  max-width: 720px;     /* batasi maksimum biar rapi */
+  min-width: 0;         /* penting: izinkan menyusut tanpa overflow */
+  margin: 0 12px;       /* beri jarak kiri-kanan dari brand & cart */
+}
+
+/* Ubah warna ikon search ke abu */
+.header > .container > div:nth-child(2) svg {
+  color: #9ca3af !important;
+}
+
+/* Cart (elemen terakhir) tetap ukuran konten & nempel di kanan */
+.header > .container > button:last-child {
+  flex: 0 0 auto;
+  margin-left: 12px;    /* jarak dari search */
+}
+
+/* Sedikit padding header agar tidak mepet tepi */
+.header {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Responsif: kalau layar sempit, kecilkan basis search dan jarak */
+@media (max-width: 768px) {
+  .header > .container {
+    gap: 12px;          /* gap antar elemen lebih rapat */
+  }
+  .header > .container > div:nth-child(2) {
+    flex-basis: 260px;  /* basis search lebih kecil */
+    margin: 0 8px;      /* jarak kiri-kanan sedikit */
+  }
+  .header > .container > button:last-child {
+    margin-left: 8px;
+  }
+}
